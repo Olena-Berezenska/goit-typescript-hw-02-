@@ -1,0 +1,37 @@
+.searchBarPannel {
+  background-color: rgb(96, 96, 219);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 32px;
+  gap: 8px;
+  padding: 10px;
+  width: 100%;
+}
+.fieldInput {
+  height: 100%;
+  width: 272px;
+  border-radius: 4px;
+  background: #fff;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 8px 16px;
+  border-color: #808080;
+  border: 1px solid #f6a46a;
+}
+
+.searchBarPannel button {
+  height: 100%;
+  width: 91px;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #090909;
+  background: #f7eecf;
+  border: 1px solid #f6a46a;
+}
