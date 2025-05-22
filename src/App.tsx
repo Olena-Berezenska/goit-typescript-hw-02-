@@ -8,16 +8,28 @@ import { useEffect, useState } from 'react';
 import { fetchPicts } from './services/apiRequest';
 import Modal from 'react-modal';
 Modal.setAppElement('#root');
+export type Picture = {
+  id: string;
+  urls: {
+    regular: string;
+    small: string;
+  };
+  alt_description?: string;
+};
 const App = () => {
-  const [picts, setPicts] = useState([]);
-  const [query, setquery] = useState('');
-  const [loading, setloading] = useState(false);
-  const [IsError, setIsError] = useState(false);
+  type FetchPictsResult = {
+    results: Picture[];
+    total_pages: number;
+  };
+  const [picts, setPicts] = useState<Picture[]>([]);
+  const [query, setquery] = useState<string>('');
+  const [loading, setloading] = useState<boolean>(false);
+  const [IsError, setIsError] = useState<boolean>(false);
 
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [selectedImage, setSelectedImage] = useState<Picture | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (query === '') return;
@@ -25,14 +37,19 @@ const App = () => {
     const getPictures = async () => {
       try {
         setloading(true);
-        const data = await fetchPicts(query, page, abortController.signal);
-        const uniqueNewPics = data.results.filter(
-          pic => !picts.some(existingPic => existingPic.id === pic.id)
+        const data: FetchPictsResult = await fetchPicts(
+          query,
+          page,
+          abortController.signal
         );
-        setPicts(prevPics => [...prevPics, ...uniqueNewPics]);
+        const uniqueNewPics = data.results.filter(
+          (pic: Picture) =>
+            !picts.some((existingPic: Picture) => existingPic.id === pic.id)
+        );
+        setPicts((prevPics: Picture[]) => [...prevPics, ...uniqueNewPics]);
         // setPicts(prev => [...prev, ...data.results]);
         setTotalPages(data.total_pages - 1);
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
         if (error.code !== 'ERR_CANCELED') {
           setIsError(true);
@@ -50,25 +67,25 @@ const App = () => {
 
   //--------------------------------//
 
-  const handleChangeQuery = newQuery => {
+  const handleChangeQuery = (newQuery: string): void => {
     setquery(newQuery);
     setPage(1);
     setPicts([]);
   };
-  const HandleLoadMore = () => {
+  const HandleLoadMore = (): void => {
     setPage(page + 1);
   };
-  const pagesDiff = totalPages - page;
+  const pagesDiff: number = totalPages - page;
   console.log(totalPages);
   console.log(pagesDiff);
   console.log(page);
   //------------------------------------------//
-  const openModal = image => {
+  const openModal = (image: Picture): void => {
     setSelectedImage(image);
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setIsModalOpen(false);
     setSelectedImage(null);
   };
@@ -86,7 +103,7 @@ const App = () => {
     },
   };
   useEffect(() => {
-    const handleKeyDown = event => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         closeModal();
       }

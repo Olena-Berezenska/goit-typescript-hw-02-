@@ -1,13 +1,21 @@
-import React from 'react';
-import { Formik, Field, Form } from 'formik';
+import React, { FC } from 'react';
+import { Formik, Field, Form, FormikHelpers } from 'formik';
 import toast, { Toaster } from 'react-hot-toast';
 import stl from './SearchBar.module.css';
-
-const SearchBar = ({ handleChangeQuery }) => {
-  const initialValues = {
+type Props = {
+  handleChangeQuery: (newQuery: string) => void;
+};
+type FormValues = {
+  query: string;
+};
+const SearchBar: React.FC<Props> = ({ handleChangeQuery }) => {
+  const initialValues: FormValues = {
     query: '',
   };
-  const handleSubmit = (values, options) => {
+  const handleSubmit = (
+    values: FormValues,
+    options: FormikHelpers<FormValues>
+  ) => {
     if (values.query.trim() !== '') {
       handleChangeQuery(values.query);
       options.resetForm();
@@ -17,7 +25,7 @@ const SearchBar = ({ handleChangeQuery }) => {
   };
   return (
     <header>
-      <Formik onSubmit={handleSubmit} initialValues={initialValues}>
+      <Formik<FormValues> onSubmit={handleSubmit} initialValues={initialValues}>
         <Form className={stl.searchBarPannel}>
           <Field name="query" className={stl.fieldInput} />
           <button type="submit">Search</button>

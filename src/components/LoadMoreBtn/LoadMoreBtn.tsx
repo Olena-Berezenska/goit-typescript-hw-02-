@@ -1,7 +1,18 @@
 import React from 'react';
 import stll from './LoadMoreBtn.module.css';
-
-const LoadMoreBtn = ({ pagesDiff, OnClickLoadMore, loading, picts }) => {
+import { Picture } from '../../App';
+type Props = {
+  loading: boolean;
+  picts: Picture[];
+  pagesDiff: number;
+  OnClickLoadMore: () => void;
+};
+const LoadMoreBtn: React.FC<Props> = ({
+  pagesDiff,
+  OnClickLoadMore,
+  loading,
+  picts,
+}) => {
   return (
     pagesDiff > 0 &&
     picts.length !== 0 &&

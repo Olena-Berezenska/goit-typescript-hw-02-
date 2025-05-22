@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-
-const ErrorMessage = ({ IsError }) => {
+type Props = {
+  IsError: boolean;
+};
+const ErrorMessage: React.FC<Props> = ({ IsError }) => {
   useEffect(() => {
     if (IsError) {
       toast.error('Try again later...');

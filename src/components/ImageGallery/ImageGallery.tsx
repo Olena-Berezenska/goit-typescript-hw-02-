@@ -1,12 +1,17 @@
 import React from 'react';
 import ImageCard from '../ImageCard/ImageCard';
 import s from './ImageGallery.module.css';
+import { Picture } from '../../App';
 
-const ImageGallery = ({ picts, onImageClick }) => {
+type Props = {
+  onImageClick: (image: Picture) => void;
+  picts: Picture[];
+};
+const ImageGallery: React.FC<Props> = ({ picts, onImageClick }) => {
   return (
     <div>
       <ul className={s.galaryList}>
-        {picts.map(pict => (
+        {picts.map((pict: Picture) => (
           <ImageCard key={pict.id} picture={pict} onImageClick={onImageClick} />
         ))}
       </ul>

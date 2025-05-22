@@ -1,9 +1,12 @@
 import React from 'react';
-import { useState, CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 
-const Spinner = ({ loading }) => {
-  const override = {
+type Props = {
+  loading: boolean;
+};
+const Spinner: React.FC<Props> = ({ loading }) => {
+  const override: CSSProperties = {
     display: 'block',
     margin: '0 auto',
     borderColor: 'red',
